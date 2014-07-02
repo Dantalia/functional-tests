@@ -1,3 +1,38 @@
-if (document.querySelectorAll("header .user_block [ng-model='email']")) {
- alert('Success!');
+﻿function elements(param) {
+ return new function() {
+  this.me = param;
+
+  this.elements = function(arg) {
+   return elements(arg)
+  }
+
+  this.first = function() {
+	var k = this.me;
+	
+	return new function() {
+			this.e = k[0];
+
+   			this.text = function() {
+   				return this.e.textContent;
+   			}
+   }
+  }
+ }
 }
+
+var by = {
+	tag: function(text) { 
+		return document.querySelectorAll(text); 
+	},
+	css: function(text) { 
+		return document.querySelectorAll(text); 
+	},
+	attr: function(type, text) { 
+		return document.querySelectorAll("[" + type + "=" + text + "]"); 
+	}
+}
+
+
+	if (elements(by.tag('header')).elements(by.css('.user-block')).elements(by.attr('ng-model', 'email')).first().text() == 'a@x.com') {
+		alert('Задание выполнено!');
+	}
